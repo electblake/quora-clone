@@ -81,7 +81,7 @@ class Question(models.Model):
 
     def get_top_comment(self):
         max_upvotes = QuestionComment.objects.filter(question=self).aggregate(models.Max('upvotes'))['upvotes__max']
-        top_comment = QuestionComment.objects.filter(upvotes=max_upvotes).first()
+        top_comment = QuestionComment.objects.filter(question=self, upvotes=max_upvotes).first()
         if top_comment:
             return {
                 'content': markdown.markdown(top_comment.comment, safe_mode='escape'),
@@ -102,7 +102,7 @@ class Tag(models.Model):
         unique_together = (('tag', 'question'),)
         index_together = [['tag', 'question'],]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.tag
 
     @staticmethod
@@ -132,7 +132,7 @@ class QuestionComment(models.Model):
         verbose_name_plural = _("Question Comments")
         ordering = ("date",)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'{0} - {1}'.format(self.user.username, self.question.title)
 
     def get_comment_as_markdown(self):
