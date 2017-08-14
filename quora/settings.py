@@ -23,7 +23,7 @@ DATABASES = {
         default = config('DATABASE_URL'))
 }
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
 
 # Application definition
 
@@ -108,6 +108,7 @@ TEMPLATES = [
             'debug': DEBUG,
             'context_processors': [
                 # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                'quora.core.theme.site_settings',
                 # list if you haven't customized them:
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
@@ -129,8 +130,8 @@ AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = ''
-SOCIAL_AUTH_FACEBOOK_SECRET =''
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
@@ -146,3 +147,5 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.user_details',
     'quora.core.social_pipeline.save_profile_picture',
 )
+
+SITE_TITLE = 'Ferst Digital Community'
